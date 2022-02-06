@@ -62,13 +62,13 @@ def clbk_laser(msg): #this part of function was obtianed from obstacle_avoidance
 def clbk_twist_kb(msg):
     global  mode_
     global sub_laser_, sub_cmd_vel_kb_, vel_msg_, pub_cmd_vel_, vel_msg
-    print("recied")
-    print ("Mode of robot: " + str(mode_))
+    ##print("recied")
+    ##print ("Mode of robot: " + str(mode_))
 
     if mode_ == 2:
-        rospy.loginfo("Received a /cmd_vel message!")
-        rospy.loginfo("Linear Components: [%f, %f, %f]"%(msg.linear.x, msg.linear.y, msg.linear.z))
-        rospy.loginfo("Angular Components: [%f, %f, %f]"%(msg.angular.x, msg.angular.y, msg.angular.z))
+        #rospy.loginfo("Received a /cmd_vel message!")
+        #rospy.loginfo("Linear Components: [%f, %f, %f]"%(msg.linear.x, msg.linear.y, msg.linear.z))
+        #rospy.loginfo("Angular Components: [%f, %f, %f]"%(msg.angular.x, msg.angular.y, msg.angular.z))
         vel_msg.linear.x = msg.linear.x
         vel_msg.linear.y = msg.linear.y
         vel_msg.linear.z = msg.linear.z
