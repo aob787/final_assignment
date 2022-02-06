@@ -1,40 +1,57 @@
 Final assignment - Research Track 1
+================================
+
 Some parts of respiratory was retrived from https://github.com/CarmineD8/final_assignment and https://github.com/CarmineD8/slam_gmapping
 
 Tasks
+--------------------
 -Building the software for recieving the co-ordinate and nagivate robot
 
 -Building the software to control the robot via keyboard with/without assistance to avoid collisions
 
 Installing and running
+----------------------
 Require package: ros navigation stack and teleop_twist_keyboard and also required xterm in ubuntu.
 
+```Shell
 sudo apt update
 sudo apt-get install ros-<your_ros_distro>-navigation
 sudo apt-get install ros-noetic-teleop-twist-keyboard
 sudo apt install xterm
+```
+
 To run you need to build/complie first using
 
+```Shell
 catkin_make
+```
 Then you can run the code by using
 
+```Shell
 roscore
 rosluanch final_assignment final_assignment.launch
+```
+
 or in case of having trobles with x-term
 
+```Shell
 roscore
 rosluanch final_assignment simulation_gmapping.launch
 rosluanch final_assignment move_base.launch
 rosrun final_assignment ui_rt3.py
 rosrun final_assignment goto_rt3.py
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=cmd_vel_kb
+```
+
 Once the program run correctly there are 5 consoles: User input node, keyboard control node, navigation node, move_base node and simulation node.
 
 Pseudocode
+--------------------
 This pseudocode consist of 2 programs.
 
 ui_rt3.py
 
+```python
 main:
   init Publisher(pub to cmd_vel)
   init Subscriber(Sub to laser scanner and cmd_vel_kb)
@@ -69,8 +86,10 @@ call_back_function_for_cmd_vel_kb: #(this function will recieve the msg fron twi
        if there is obstacle:
          reduce the vel of that direction to 0
      pub_cmd_vel_.publish(vel_msg)
+```
 goto_rt3.py
 
+```python
 main:
   init action (move_base)
   init service (recieve the toggle from ui_rt3,py)
@@ -88,8 +107,13 @@ service:
 
 done_cb:
   print(read_return_data_from_move_base)
+
+```
+
+
 Implemented code
-The ui_rt3.py aka. main code will use to switch modes of robots between autonomously reach a x,y coordinate inserted by the user and let the user drive the robot with the keyboard with/without assistance.
+--------------------
+The ui_rt3.py aka. main code will use to switch modes of robots between autonomously reach a x,y coordinate inserted by the user and  let the user drive the robot with the keyboard with/without assistance.
 
 The goto_rt.py take the coordinate from ui_rt3 then using action to set the goal of move_base node.
 
