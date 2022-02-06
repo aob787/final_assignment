@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   tf
+  teleop_twist_keyboard
 )
 
 ## System dependencies are found with CMake's conventions

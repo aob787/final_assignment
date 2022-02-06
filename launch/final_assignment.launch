@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-	
+
 	  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
@@ -36,25 +36,25 @@
   </group>
   <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="$(arg respawn_gazebo)" output="screen"
 	args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) -e $(arg physics) $(arg extra_gazebo_args) $(arg world_name)" />
-	
+
   <!-- start gazebo client -->
   <group if="$(arg gui)">
     <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
   </group>
-	
+
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description" textfile="$(find final_assignment)/urdf/robot.urdf" />
-	 
-  <!-- Start Rviz -->  
+
+  <!-- Start Rviz -->
   <param name="use_gui" value="False"/>
    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
-   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> 
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find final_assignment)/config/sim.rviz" />
 
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-	args="-urdf -model robot1 -param robot_description -x -5.0 -y 8.0 -z 0.05"/> 
-	
+	args="-urdf -model robot1 -param robot_description -x -5.0 -y 8.0 -z 0.05"/>
+
    <param name="use_sim_time" value="true"/>
     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
 	  <param name="base_frame" value="link_chassis"/>
@@ -89,4 +89,22 @@
       <param name="transform_publish_period" value="0.0005"/>
     </node>
 
+		<!-- Run move base package -->
+		<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" launch-prefix="xterm -e">
+	    <rosparam file="$(find final_assignment)/param/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+	    <rosparam file="$(find final_assignment)/param/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+	    <rosparam file="$(find final_assignment)/param/local_costmap_params.yaml" command="load"/>
+	    <rosparam file="$(find final_assignment)/param/global_costmap_params.yaml" command="load"/>
+	    <rosparam file="$(find final_assignment)/param/base_local_planner_params.yaml" command="load"/>
+	    <rosparam file="$(find final_assignment)/param/move_base_params.yaml" command="load"/>
+    </node>
+
+		<node pkg="final_assignment" name="ui_rt3.py" type="ui_rt3.py" output="screen" launch-prefix="xterm -e">
+    </node>
+
+    <node pkg="final_assignment" name="goto_rt3.py" type="goto_rt3.py" output="screen" launch-prefix="xterm -e">
+    </node>
+
+    <node pkg="teleop_twist_keyboard" name="teleop_twist_keyboard.py" type="teleop_twist_keyboard.py" output="screen" launch-prefix="xterm -e" args="cmd_vel:=cmd_vel_kb">
+    </node>
 </launch>
