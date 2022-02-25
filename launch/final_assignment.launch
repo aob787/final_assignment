@@ -99,12 +99,12 @@
 	    <rosparam file="$(find final_assignment)/param/move_base_params.yaml" command="load"/>
     </node>
 
-		<node pkg="final_assignment" name="ui_rt3.py" type="ui_rt3.py" output="screen" launch-prefix="xterm -e">
+		<node pkg="final_assignment" name="ui_rt3" type="ui_rt3.py" output="screen" launch-prefix="xterm -e">
     </node>
 
-    <node pkg="final_assignment" name="goto_rt3.py" type="goto_rt3.py" output="screen" launch-prefix="xterm -e">
+    <node pkg="final_assignment" name="goto_rt3" type="goto_rt3.py" output="screen" launch-prefix="xterm -e">
     </node>
 
-    <node pkg="teleop_twist_keyboard" name="teleop_twist_keyboard.py" type="teleop_twist_keyboard.py" output="screen" launch-prefix="xterm -e" args="cmd_vel:=cmd_vel_kb">
+    <node pkg="teleop_twist_keyboard" name="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen" launch-prefix="xterm -e" args="cmd_vel:=cmd_vel_kb">
     </node>
 </launch>

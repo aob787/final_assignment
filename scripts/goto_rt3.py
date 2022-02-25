@@ -1,3 +1,20 @@
+"""
+.. module:: goto_rt3
+    :platform: Unix
+    :synopsis: Node for manage the goal of the robot
+.. moduleauthor:: Tachadol Suthisomboon Tachadol.su@gmail.com
+
+This node recive the user input from :mod:`ui_rt3` and relay the position to `move_base <http://wiki.ros.org/move_base/>`_.
+Also, when the action return the status, this node will print out the result.
+
+Action(s):
+/move_base
+
+Service(s):
+/activate_goto
+"""
+
+
 #! /usr/bin/env python
 
 #https://answers.ros.org/question/80646/python-sending-goals-to-the-navigation-stack/
@@ -15,9 +32,20 @@ import math
 
 
 activate_= False
+"""Boolean: state of node (True/False). True means the node is enabled to control the robot goal.
+"""
 client_ = None
+"""Client side service handeler (between :mod:`ui_rt3` and :mod:`goto_rt3`
+"""
 
 def go_to_switch(req):
+    """
+    Function for enable/disable this module
+    Args:
+    req(ROS service): State of goto_rt3
+    Returns:
+    res(ROS service): Response msg
+    """
     global activate_
     activate_ = req.data
     client_.cancel_goal()
@@ -29,6 +57,14 @@ def go_to_switch(req):
 
 def done_cb(status, result):
 # Reference for terminal status values: http://docs.ros.org/diamondback/api/actionlib_msgs/html/msg/GoalStatus.html
+    """
+    Function for printing the state of move_base
+    Args:
+    status(int): State of move_base
+    result(int): Result of move_base
+    Returns:
+    -
+    """
     if status == 2:
         rospy.loginfo("Goal pose received a cancel request after it started executing, completed execution!")
 
@@ -42,6 +78,15 @@ def done_cb(status, result):
         rospy.loginfo("The goal can not be reached")
 
 def main():
+    """
+    This function initializes the ROS node action and service.
+    After initialization, this function waiting for the trigger from
+    :mod:`ui_rt3` (via service (activate_goto))
+    Then, starting relay the information to
+    `move_base <http://wiki.ros.org/move_base/>`_.
+    The user message is passed to the service
+    ``move_base``.
+    """
     global activate_, client_
     activate_ = False
     rospy.init_node('goto_pos_rt3')
