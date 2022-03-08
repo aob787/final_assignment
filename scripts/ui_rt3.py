@@ -1,8 +1,23 @@
-#! /usr/bin/env python
-## rosrun final_assignment ui-rt3.py
-## rosrun final_assignment goto-rt3.py
-##rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=cmd_vel_kb
+"""
+.. module:: ui_rt3
+    :platform: Unix
+    :synopsis: Node for taking an input (mode) and relay the cmd_vel_kb from teleop_twist_keyboard to simulation
+.. moduleauthor:: Tachadol Suthisomboon Tachadol.su@gmail.com
 
+This node recieve the mode of the robot from user (1 for automatic navigation, 2 for control robot using teleop_twist_keyboard
+3 for using teleop_twist_keyboard to control the robot with assistance). Mode 1 going to take the co-ordinate of goal position
+and convey to goto_rt3 node. Mode 2 and mode 3 going to pass the values from teleop_twist_keyboard with/without correction to simulatio environment.
+
+Publisher(s):
+/cmd_vel
+
+Subscriber(s):
+/scan
+/cmd_vel_kb
+
+Service(s):
+/activate_goto
+"""
 
 import rospy
 from std_srvs.srv import *
@@ -12,14 +27,30 @@ import time
 
 #Parameters
 obstacle_detection_range = 1
+"""Int: varible for defining the range of detection for assisted control.
+"""
 
 srv_activate_goto_ = None
+"""Service: Service hadler between ui_rt3 -> goto_rt3
+"""
 mode_ = 0
+"""Int: mode of the robot
+"""
 sub_laser_ = None
+"""Subscriber: Subscriber handeler for lase scanner
+"""
 sub_cmd_vel_kb_ = None
+"""Subscriber: Subscriber handeler for teleop_twist_keyboard
+"""
 pub_cmd_vel_ =None
+"""Publisher: Publisher handeler for conveying the information to simulation
+"""
 able_to_move_ = [0, 0, 0, 0, 0] #% array including right fringht front fleft and left
+"""Int (5 x 1 array): Consists of status of each zone (left, front-left, front, front-right, right)
+"""
 vel_msg = Twist()
+"""Twist msg: Information of robot
+"""
 
 def check_obstruc(regions, key, index):
     global able_to_move_
