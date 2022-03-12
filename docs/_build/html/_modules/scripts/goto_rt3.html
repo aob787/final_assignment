@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scripts.goto_rt3 &mdash; Final assignment 1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Final assignment
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Final assignment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>scripts.goto_rt3</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for scripts.goto_rt3</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: goto_rt3</span>
+<span class="sd">    :platform: Unix</span>
+<span class="sd">    :synopsis: Node for manage the goal of the robot</span>
+<span class="sd">.. moduleauthor:: Tachadol Suthisomboon Tachadol.su@gmail.com</span>
+
+<span class="sd">This node recive the user input from :mod:`ui_rt3` and relay the position to `move_base &lt;http://wiki.ros.org/move_base/&gt;`_.</span>
+<span class="sd">Also, when the action return the status, this node will print out the result.</span>
+
+<span class="sd">Action(s):</span>
+<span class="sd">/move_base</span>
+
+<span class="sd">Service(s):</span>
+<span class="sd">/activate_goto</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1">#! /usr/bin/env python</span>
+
+<span class="c1">#https://answers.ros.org/question/80646/python-sending-goals-to-the-navigation-stack/</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+
+
+<span class="c1"># import ros service</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">actionlib_msgs.msg</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">move_base_msgs.msg</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">actionlib</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<span class="n">activate_</span><span class="o">=</span> <span class="kc">False</span>
+<span class="sd">&quot;&quot;&quot;Boolean: state of node (True/False). True means the node is enabled to control the robot goal.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">client_</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="sd">&quot;&quot;&quot;Client side service handeler (between :mod:`ui_rt3` and :mod:`goto_rt3`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="go_to_switch"><a class="viewcode-back" href="../../index.html#scripts.goto_rt3.go_to_switch">[docs]</a><span class="k">def</span> <span class="nf">go_to_switch</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function for enable/disable this module</span>
+<span class="sd">    Args:</span>
+<span class="sd">    req(ROS service): State of goto_rt3</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    res(ROS service): Response msg</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">activate_</span>
+    <span class="n">activate_</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">client_</span><span class="o">.</span><span class="n">cancel_goal</span><span class="p">()</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Status of node goto-rt3 = &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">activate_</span><span class="p">))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">SetBoolResponse</span><span class="p">()</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Done!&#39;</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="done_cb"><a class="viewcode-back" href="../../index.html#scripts.goto_rt3.done_cb">[docs]</a><span class="k">def</span> <span class="nf">done_cb</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+<span class="c1"># Reference for terminal status values: http://docs.ros.org/diamondback/api/actionlib_msgs/html/msg/GoalStatus.html</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function for printing the state of move_base</span>
+<span class="sd">    Args:</span>
+<span class="sd">    status(int): State of move_base</span>
+<span class="sd">    result(int): Result of move_base</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    -</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Goal pose received a cancel request after it started executing, completed execution!&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Goal pose  reached&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Goal pose was aborted during execution by the action server due&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;The goal was rejected by the action server without being processed&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;The goal can not be reached&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../index.html#scripts.goto_rt3.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function initializes the ROS node action and service.</span>
+<span class="sd">    After initialization, this function waiting for the trigger from</span>
+<span class="sd">    :mod:`ui_rt3` (via service (activate_goto))</span>
+<span class="sd">    Then, starting relay the information to</span>
+<span class="sd">    `move_base &lt;http://wiki.ros.org/move_base/&gt;`_.</span>
+<span class="sd">    The user message is passed to the service</span>
+<span class="sd">    ``move_base``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">activate_</span><span class="p">,</span> <span class="n">client_</span>
+    <span class="n">activate_</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;goto_pos_rt3&#39;</span><span class="p">)</span>
+    <span class="c1">##https://answers.ros.org/question/316592/problem-when-publishing-to-move_basegoal/</span>
+    <span class="c1">#http://wiki.ros.org/navigation/Tutorials/SendingSimpleGoals</span>
+    <span class="n">client_</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span><span class="s1">&#39;move_base&#39;</span><span class="p">,</span> <span class="n">MoveBaseAction</span><span class="p">)</span>
+    <span class="n">client_</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">()</span>
+
+    <span class="n">srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s1">&#39;activate_goto&#39;</span><span class="p">,</span> <span class="n">SetBool</span><span class="p">,</span> <span class="n">go_to_switch</span><span class="p">)</span>
+
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+
+        <span class="k">if</span> <span class="n">activate_</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">activate_</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">goal</span> <span class="o">=</span> <span class="n">MoveBaseGoal</span><span class="p">()</span>
+            <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s1">&#39;des_pos_x&#39;</span><span class="p">)</span>
+            <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s1">&#39;des_pos_y&#39;</span><span class="p">)</span>
+            <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s1">&#39;map&#39;</span>
+            <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span>  <span class="o">=</span> <span class="mi">1</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Goal X Y = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">client_</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">goal</span><span class="p">,</span> <span class="n">done_cb</span><span class="o">=</span><span class="n">done_cb</span><span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Tachadol Suthisomboon.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

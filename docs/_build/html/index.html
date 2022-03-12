@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Final assignment’s documentation! &mdash; Final assignment 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> Final assignment
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to Final assignment’s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a><ul>
+<li><a class="reference internal" href="#rt2-assignment1-s-documentation">Rt2_assignment1’s documentation!</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.goto_rt3">goto_rt3 Module</a></li>
+<li><a class="reference internal" href="#module-scripts.ui_rt3">ui_rt3 Module</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Final assignment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Welcome to Final assignment’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="welcome-to-final-assignment-s-documentation">
+<h1>Welcome to Final assignment’s documentation!<a class="headerlink" href="#welcome-to-final-assignment-s-documentation" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+<div class="section" id="rt2-assignment1-s-documentation">
+<h2>Rt2_assignment1’s documentation!<a class="headerlink" href="#rt2-assignment1-s-documentation" title="Permalink to this headline"></a></h2>
+<p>This is the documentation of the RT1 assignment</p>
+</div>
+</div>
+<div class="section" id="module-scripts.goto_rt3">
+<span id="goto-rt3-module"></span><h1>goto_rt3 Module<a class="headerlink" href="#module-scripts.goto_rt3" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-goto_rt3"></span><p>This node recive the user input from <a class="reference internal" href="#module-ui_rt3" title="ui_rt3: Node for taking an input (mode) and relay the cmd_vel_kb from teleop_twist_keyboard to simulation (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ui_rt3</span></code></a> and relay the position to <a class="reference external" href="http://wiki.ros.org/move_base/">move_base</a>.
+Also, when the action return the status, this node will print out the result.</p>
+<p>Action(s):
+/move_base</p>
+<p>Service(s):
+/activate_goto</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.goto_rt3.activate_">
+<span class="sig-prename descclassname"><span class="pre">scripts.goto_rt3.</span></span><span class="sig-name descname"><span class="pre">activate_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#scripts.goto_rt3.activate_" title="Permalink to this definition"></a></dt>
+<dd><p>state of node (True/False). True means the node is enabled to control the robot goal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.goto_rt3.client_">
+<span class="sig-prename descclassname"><span class="pre">scripts.goto_rt3.</span></span><span class="sig-name descname"><span class="pre">client_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#scripts.goto_rt3.client_" title="Permalink to this definition"></a></dt>
+<dd><p>Client side service handeler (between <a class="reference internal" href="#module-ui_rt3" title="ui_rt3: Node for taking an input (mode) and relay the cmd_vel_kb from teleop_twist_keyboard to simulation (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ui_rt3</span></code></a> and <a class="reference internal" href="#module-goto_rt3" title="goto_rt3: Node for manage the goal of the robot (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">goto_rt3</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.goto_rt3.done_cb">
+<span class="sig-prename descclassname"><span class="pre">scripts.goto_rt3.</span></span><span class="sig-name descname"><span class="pre">done_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/goto_rt3.html#done_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.goto_rt3.done_cb" title="Permalink to this definition"></a></dt>
+<dd><p>Function for printing the state of move_base
+Args:
+status(int): State of move_base
+result(int): Result of move_base
+Returns:
+-</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.goto_rt3.go_to_switch">
+<span class="sig-prename descclassname"><span class="pre">scripts.goto_rt3.</span></span><span class="sig-name descname"><span class="pre">go_to_switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/goto_rt3.html#go_to_switch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.goto_rt3.go_to_switch" title="Permalink to this definition"></a></dt>
+<dd><p>Function for enable/disable this module
+Args:
+req(ROS service): State of goto_rt3
+Returns:
+res(ROS service): Response msg</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.goto_rt3.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.goto_rt3.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/goto_rt3.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.goto_rt3.main" title="Permalink to this definition"></a></dt>
+<dd><p>This function initializes the ROS node action and service.
+After initialization, this function waiting for the trigger from
+<a class="reference internal" href="#module-ui_rt3" title="ui_rt3: Node for taking an input (mode) and relay the cmd_vel_kb from teleop_twist_keyboard to simulation (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ui_rt3</span></code></a> (via service (activate_goto))
+Then, starting relay the information to
+<a class="reference external" href="http://wiki.ros.org/move_base/">move_base</a>.
+The user message is passed to the service
+<code class="docutils literal notranslate"><span class="pre">move_base</span></code>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.ui_rt3">
+<span id="ui-rt3-module"></span><h1>ui_rt3 Module<a class="headerlink" href="#module-scripts.ui_rt3" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-ui_rt3"></span><p>This node recieve the mode of the robot from user (1 for automatic navigation, 2 for control robot using teleop_twist_keyboard
+3 for using teleop_twist_keyboard to control the robot with assistance). Mode 1 going to take the co-ordinate of goal position
+and convey to goto_rt3 node. Mode 2 and mode 3 going to pass the values from teleop_twist_keyboard with/without correction to simulatio environment.</p>
+<p>Publisher(s):
+/cmd_vel</p>
+<p>Subscriber(s):
+/scan
+/cmd_vel_kb</p>
+<p>Service(s):
+/activate_goto</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.ui_rt3.able_to_move_">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">able_to_move_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0]</span></em><a class="headerlink" href="#scripts.ui_rt3.able_to_move_" title="Permalink to this definition"></a></dt>
+<dd><p>Consists of status of each zone (left, front-left, front, front-right, right)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Int</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>(5 x 1 array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.ui_rt3.check_obstruc">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">check_obstruc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/ui_rt3.html#check_obstruc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.ui_rt3.check_obstruc" title="Permalink to this definition"></a></dt>
+<dd><p>Function for check obstructcal by using laser scanner and assign in to occupancy list.
+Args:
+regions(dictionary): dictionary of laser scanner in each direction
+key(string): key for regions
+index(int): indexing of occupancy list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.ui_rt3.clbk_laser">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">clbk_laser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/ui_rt3.html#clbk_laser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.ui_rt3.clbk_laser" title="Permalink to this definition"></a></dt>
+<dd><p>Callback function for laser scanner. this function will be called when the msg from laser scanner has been published
+Args:
+msg(dictionary): data from lase scanner</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.ui_rt3.mode_">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">mode_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#scripts.ui_rt3.mode_" title="Permalink to this definition"></a></dt>
+<dd><p>mode of the robot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.ui_rt3.obstacle_detection_range">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">obstacle_detection_range</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#scripts.ui_rt3.obstacle_detection_range" title="Permalink to this definition"></a></dt>
+<dd><p>varible for defining the range of detection for assisted control.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.ui_rt3.pub_cmd_vel_">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">pub_cmd_vel_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#scripts.ui_rt3.pub_cmd_vel_" title="Permalink to this definition"></a></dt>
+<dd><p>Publisher handeler for conveying the information to simulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Publisher</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.ui_rt3.srv_activate_goto_">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">srv_activate_goto_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#scripts.ui_rt3.srv_activate_goto_" title="Permalink to this definition"></a></dt>
+<dd><p>Service hadler between ui_rt3 -&gt; goto_rt3</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Service</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.ui_rt3.sub_cmd_vel_kb_">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">sub_cmd_vel_kb_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#scripts.ui_rt3.sub_cmd_vel_kb_" title="Permalink to this definition"></a></dt>
+<dd><p>Subscriber handeler for teleop_twist_keyboard</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Subscriber</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.ui_rt3.sub_laser_">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">sub_laser_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#scripts.ui_rt3.sub_laser_" title="Permalink to this definition"></a></dt>
+<dd><p>Subscriber handeler for lase scanner</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Subscriber</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.ui_rt3.vel_msg">
+<span class="sig-prename descclassname"><span class="pre">scripts.ui_rt3.</span></span><span class="sig-name descname"><span class="pre">vel_msg</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">linear:</span>&#160;&#160;&#160; <span class="pre">x:</span> <span class="pre">0.0</span>&#160;&#160; <span class="pre">y:</span> <span class="pre">0.0</span>&#160;&#160; <span class="pre">z:</span> <span class="pre">0.0</span> <span class="pre">angular:</span>&#160;&#160;&#160; <span class="pre">x:</span> <span class="pre">0.0</span>&#160;&#160; <span class="pre">y:</span> <span class="pre">0.0</span>&#160;&#160; <span class="pre">z:</span> <span class="pre">0.0</span></em><a class="headerlink" href="#scripts.ui_rt3.vel_msg" title="Permalink to this definition"></a></dt>
+<dd><p>Information of robot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Twist</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>msg</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Tachadol Suthisomboon.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

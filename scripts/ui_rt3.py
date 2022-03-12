@@ -46,20 +46,34 @@ pub_cmd_vel_ =None
 """Publisher: Publisher handeler for conveying the information to simulation
 """
 able_to_move_ = [0, 0, 0, 0, 0] #% array including right fringht front fleft and left
-"""Int (5 x 1 array): Consists of status of each zone (left, front-left, front, front-right, right)
+"""Int: (5 x 1 array): Consists of status of each zone (left, front-left, front, front-right, right)
 """
+
 vel_msg = Twist()
-"""Twist msg: Information of robot
+"""Twist: msg: Information of robot
 """
 
 def check_obstruc(regions, key, index):
+    """
+    Function for check obstructcal by using laser scanner and assign in to occupancy list.
+    Args:
+    regions(dictionary): dictionary of laser scanner in each direction
+    key(string): key for regions
+    index(int): indexing of occupancy list
+    """
     global able_to_move_
+
     if regions[key] > obstacle_detection_range :
         able_to_move_[index] = 1
     else :
         able_to_move_[index] = 0
 
 def clbk_laser(msg): #this part of function was obtianed from obstacle_avoidance.py
+    """
+    Callback function for laser scanner. this function will be called when the msg from laser scanner has been published
+    Args:
+    msg(dictionary): data from lase scanner
+    """
     global vel_msg
     regions = {
         'right':  min(min(msg.ranges[0:143]), 10),
