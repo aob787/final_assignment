@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 """
 .. module:: ui_rt3
     :platform: Unix
@@ -50,8 +51,12 @@ able_to_move_ = [0, 0, 0, 0, 0] #% array including right fringht front fleft and
 """
 
 vel_msg = Twist()
-"""Twist: msg: Information of robot
+"""Twist: Information of robot
 """
+
+
+
+
 
 def check_obstruc(regions, key, index):
     """
@@ -72,7 +77,7 @@ def clbk_laser(msg): #this part of function was obtianed from obstacle_avoidance
     """
     Callback function for laser scanner. this function will be called when the msg from laser scanner has been published
     Args:
-    msg(dictionary): data from lase scanner
+    msg(int array): data from lase scanner
     """
     global vel_msg
     regions = {
@@ -105,6 +110,11 @@ def clbk_laser(msg): #this part of function was obtianed from obstacle_avoidance
 
 
 def clbk_twist_kb(msg):
+    """
+    Callback function for teleop_twist_keyboard. this function will be called when the twist from teleop_twist_keyboard has been published
+    Args:
+    msg(twist): data from lase scanner
+    """
     global  mode_
     global sub_laser_, sub_cmd_vel_kb_, vel_msg_, pub_cmd_vel_, vel_msg
     ##print("recied")
@@ -143,29 +153,37 @@ def clbk_twist_kb(msg):
         if able_to_move_[4] == 0 and msg.angular.z > 0:
             vel_msg.angular.z = 0
         pub_cmd_vel_.publish(vel_msg)
-"""
-teleop_twist_keyboard
-https://github.com/ros-teleop/teleop_twist_keyboard/blob/master/teleop_twist_keyboard.py
-Moving around:
-   u    i    o
-   j    k    l
-   m    ,    .
-    (x,y,z,yaw)
-'i':(1,0,0,0),
-'o':(1,0,0,-1),
-'j':(0,0,0,1),
-'l':(0,0,0,-1),
-'u':(1,0,0,1),
-',':(-1,0,0,0),
-'.':(-1,0,0,1),
-'m':(-1,0,0,-1),
-"""
+#
+# teleop_twist_keyboard
+# https://github.com/ros-teleop/teleop_twist_keyboard/blob/master/teleop_twist_keyboard.py
+# Moving around:
+#    u    i    o
+#    j    k    l
+#    m    ,    .
+#     (x,y,z,yaw)
+# 'i':(1,0,0,0),
+# 'o':(1,0,0,-1),
+# 'j':(0,0,0,1),
+# 'l':(0,0,0,-1),
+# 'u':(1,0,0,1),
+# ',':(-1,0,0,0),
+# '.':(-1,0,0,1),
+# 'm':(-1,0,0,-1),
+#
 
 def main():
+    """
+    This function initializes the ROS node (ui_rt3).
+    After initialization, this function will waiting for the user input. Then, the fucntion will excute regard to mode that user have input.
+    """
     global srv_activate_goto_, mode_
     global sub_laser_, sub_cmd_vel_kb_, vel_msg_, pub_cmd_vel_
     time.sleep(2)
     rospy.init_node('main_rt3')
+
+    rospy.set_param('/reachedAndNot', [0, 0])
+    "Array (ints): get a global parameter (reached and not-reached targets)"
+    #rospy.set_param('reachedAndNot', [0, 0])
 
     sub_laser_ = rospy.Subscriber('/scan', LaserScan, clbk_laser)
     sub_cmd_vel_kb_ = rospy.Subscriber("/cmd_vel_kb", Twist, clbk_twist_kb)

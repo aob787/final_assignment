@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<launch>
+    
+    <!-- Include launch files procited by the professor
+    
+    <include file="$(find final_assignment)/launch/simulation_gmapping.launch"/>
+    <include file="$(find final_assignment)/launch/move_base.launch"/>
+    -->
+    <node pkg="final_assignment" name="goto_rt3" type="goto_rt3.py" output="screen" launch-prefix="xterm -e"></node>
+    
+
+    <node pkg="teleop_twist_keyboard" name="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen" launch-prefix="xterm -e" args="cmd_vel:=cmd_vel_kb">
+    </node>
+    
+
+</launch>

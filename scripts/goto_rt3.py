@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 """
 .. module:: goto_rt3
     :platform: Unix
@@ -15,7 +16,7 @@ Service(s):
 """
 
 
-#! /usr/bin/env python
+
 
 #https://answers.ros.org/question/80646/python-sending-goals-to-the-navigation-stack/
 
@@ -65,17 +66,23 @@ def done_cb(status, result):
     Returns:
     -
     """
+    reachedAndNot = rospy.get_param("/reachedAndNot")
     if status == 2:
         rospy.loginfo("Goal pose received a cancel request after it started executing, completed execution!")
+        rospy.set_param('reachedAndNot', [reachedAndNot[0], reachedAndNot[1]+1])
 
     elif status == 3:
         rospy.loginfo("Goal pose  reached")
+        rospy.set_param('reachedAndNot', [reachedAndNot[0]+1, reachedAndNot[1]])
     elif status == 4:
         rospy.loginfo("Goal pose was aborted during execution by the action server due")
+        rospy.set_param('reachedAndNot', [reachedAndNot[0], reachedAndNot[1]+1])
     elif status == 5:
         rospy.loginfo("The goal was rejected by the action server without being processed")
+        rospy.set_param('reachedAndNot', [reachedAndNot[0], reachedAndNot[1]+1])
     else:
         rospy.loginfo("The goal can not be reached")
+        rospy.set_param('reachedAndNot', [reachedAndNot[0], reachedAndNot[1]+1])
 
 def main():
     """
