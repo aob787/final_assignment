@@ -3,6 +3,18 @@ Final assignment - Research Track 1
 
 Some parts of respiratory was retrived from https://github.com/CarmineD8/final_assignment and https://github.com/CarmineD8/slam_gmapping
 
+For RT2
+--------------------
+For the documentation go to https://aob787.github.io/final_assignment/
+
+For testing jupyter notebook
+  First: Open Jupyter notebook file "Jupyter_ui.ipynb"
+  Second:
+    ```Shell
+        roscore
+        rosluanch final_assignment final_assignment_rt2.launch
+    ```
+
 Tasks
 --------------------
 -Building the software for recieving the co-ordinate and nagivate robot
@@ -11,21 +23,7 @@ Tasks
 
 Installing and running
 ----------------------
-Require package: ros navigation stack and teleop_twist_keyboard and also required xterm in ubuntu.
-
-```Shell
-sudo apt update
-sudo apt-get install ros-<your_ros_distro>-navigation
-sudo apt-get install ros-noetic-teleop-twist-keyboard
-sudo apt install xterm
-```
-
-To run you need to build/complie first using
-
-```Shell
-catkin_make
-```
-Then you can run the code by using
+You can run the code by using
 
 ```Shell
 roscore
