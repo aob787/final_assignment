@@ -8,12 +8,14 @@ For RT2
 For the documentation go to https://aob787.github.io/final_assignment/
 
 For testing jupyter notebook
+
   First: Open Jupyter notebook file "Jupyter_ui.ipynb"
+  
   Second:
-    ```Shell
-        roscore
-        rosluanch final_assignment final_assignment_rt2.launch
-    ```
+  ```Shell
+  roscore
+  rosluanch final_assignment final_assignment_rt2.launch
+  ```
 
 Tasks
 --------------------
