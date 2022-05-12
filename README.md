@@ -17,9 +17,12 @@ For testing jupyter notebook
   rosluanch final_assignment final_assignment_rt2.launch
   ```
 
-Further improvements (that can be improve):
+Further improvements (that can be improved):
+  
   -Improve the UI e.g., put all of the graph in to the tabs like I did in switching mode for robot.
+  
   -Improve the graph update efficiency, right now it a bit laggy. Maybe we can find the optimal solution for graph especially for the robot path since it may contains many data points to display.
+  
   -Add the Joystick widget to jupyter notebook. So, we can control robot without using teleop_twist_keyboard.
 
 Tasks
