@@ -20,9 +20,9 @@ For testing jupyter notebook
 
 Further improvements (that can be improved):
 
-  -Improve the UI e.g., put all of the graph in to the tabs like I did in switching mode for robot.
+  - Improve the UI e.g., put all of the graph in to the tabs like I did in switching mode for robot.
 
-  -Improve the graph update efficiency, right now it a bit laggy. Maybe we can find the optimal solution for graph especially for the robot path since it may contains many data points to display.
+  - Improve the graph update efficiency, right now it a bit laggy. Maybe we can find the optimal solution for graph especially for the robot path since it may contains many data points to display.
 
   - Jupyter code is a bit messy since I tried not to touch previous code (i.e., the one that has been submitted in RT1) and they are not design to do this tasks, for example showing the success and failure in histogram, because that code isn't integrated in UI. So, I have to create a new ros params to send the data.
 
